@@ -58,5 +58,6 @@ function Stop-WebDriver {
     )
 
     $driver.Quit()
+    Write-Host "Closing WebDriver"
     $driver.Dispose()
 }
