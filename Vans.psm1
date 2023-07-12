@@ -25,10 +25,10 @@ function Get-URL {
 function Enter-ElementIdByJavaScript {
     param(
         [Parameter(Mandatory=$true)]
-        [System.Management.Automation.Internal.PSObject]$driver,
+        [System.Object]$driver,
 
         [Parameter(Mandatory=$true)]
-        [System.Management.Automation.Internal.PSObject]$elementId
+        [System.Object]$elementId
     )
 
     $script = "arguments[0].click();"
@@ -38,10 +38,10 @@ function Enter-ElementIdByJavaScript {
 function Enter-ElementXpathByJavaScript {
     param(
         [Parameter(Mandatory=$true)]
-        [System.Management.Automation.Internal.PSObject]$driver,
+        [System.Object]$driver,
 
         [Parameter(Mandatory=$true)]
-        [System.Management.Automation.Internal.PSObject]$elementXpath
+        [System.Object]$elementXpath
     )
 
     $script = "arguments[0].click();"
