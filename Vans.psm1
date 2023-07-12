@@ -40,9 +40,6 @@ function Set-ElementValueById {
 function Enter-ElementIdByJavaScript {
     param(
         [Parameter(Mandatory=$true)]
-        [System.Object]$driver,
-
-        [Parameter(Mandatory=$true)]
         [System.Object]$elementId
     )
 
