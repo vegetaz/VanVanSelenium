@@ -33,7 +33,7 @@ function Enter-ITW {
         [Parameter(Mandatory=$true)]
         [string]$username,
         [Parameter(Mandatory=$true)]
-        [SecureString]$password
+        [string]$password
     )
 
     Get-URL($itw)
