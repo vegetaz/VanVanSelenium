@@ -54,7 +54,7 @@ function Enter-ElementXpathByJavaScript {
 function Stop-WebDriver {
     param(
         [Parameter(Mandatory=$true)]
-        [System.Management.Automation.Internal.PSObject]$driver
+        [System.Object]$driver
     )
 
     $driver.Quit()
