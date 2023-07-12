@@ -70,6 +70,20 @@ function Enter-ElementXpathByJavaScript {
     $driver.ExecuteScript($script, @($elementXpath))
 }
 
+function Switch-ToIframe {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$iframeIdOrName
+    )
+
+    try {
+        $driver.SwitchTo().Frame($IframeIdOrName) | Out-Null
+    }
+    catch [OpenQA.Selenium.NoSuchElementException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+}
+
 function Stop-WebDriver {
     try {
         $driver.Close()
