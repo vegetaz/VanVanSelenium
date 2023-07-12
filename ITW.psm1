@@ -2,28 +2,35 @@ using namespace System.Collections.Generic
 
 function Enter-ITW {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$itw,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$username,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [SecureString]$securePassword
     )
 
-    Get-URL($itw)
-    Set-ElementValueById -elementId 'uname' -value $username
+    Get-URL($itw)    
     $plainTextPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword))
-    Start-Sleep -Seconds 1
-    Set-ElementValueById -elementId 'pass' -value $plainTextPassword
-    Enter-ElementIdByJavaScript -elementId 'btnlogin'
-    Start-Sleep -Seconds 5
-    Enter-ElementXpathByJavaScript('//*[@id="header_headerlinksContent"]/button')
-    Start-Sleep -Seconds 3
+    
+    try {
+        Set-ElementValueById -elementId 'uname' -value $username
+        Start-Sleep -Seconds 1
+        Set-ElementValueById -elementId 'pass' -value $plainTextPassword
+        Start-Sleep -Seconds 1
+        Enter-ElementIdByJavaScript -elementId 'btnlogin'
+        Start-Sleep -Seconds 5
+        Enter-ElementXpathByJavaScript('//*[@id="header_headerlinksContent"]/button')
+        Start-Sleep -Seconds 3
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
 }
 
 function Expand-FolderCategory {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$examFolderName
     )
 
