@@ -33,12 +33,14 @@ function Enter-ITW {
         [Parameter(Mandatory=$true)]
         [string]$username,
         [Parameter(Mandatory=$true)]
-        [string]$password
+        [SecureString]$securePassword
     )
 
     Get-URL($itw)
     Set-ElementValueById -elementId 'uname' -value $username
-    Set-ElementValueById -elementId 'pass' -value $password
+    $plainTextPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword))
+    Start-Sleep -Seconds 1
+    Set-ElementValueById -elementId 'pass' -value $plainTextPassword
     Enter-ElementIdByJavaScript -elementId 'btnlogin'
     Start-Sleep -Seconds 3
     Enter-ElementXpathByJavaScript('//*[@id="header_headerlinksContent"]/button')
