@@ -19,9 +19,9 @@ function Enter-ITW {
         Set-ElementValueById -elementId 'pass' -value $plainTextPassword
         Start-Sleep -Seconds 1
         Enter-ElementIdByJavaScript -elementId 'btnlogin'
+        Start-Sleep -Seconds 1
+        Wait-EnterElementId -timeOut 10 -elementId 'header_headerlinksContent'
         Start-Sleep -Seconds 5
-        Enter-ElementId('header_headerlinksContent')
-        Start-Sleep -Seconds 3
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"

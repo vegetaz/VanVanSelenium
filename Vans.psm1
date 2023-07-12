@@ -2,7 +2,7 @@ using namespace System.Collections.Generic
 
 function Set-ImplicitWait {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [int]$timeoutSeconds
     )
 
@@ -24,10 +24,10 @@ function Get-URL {
 
 function Set-ElementValueById {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$elementId,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$value
     )
 
@@ -44,7 +44,7 @@ function Set-ElementValueById {
 
 function Enter-ElementId {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [System.Object]$elementId
     )
     
@@ -58,9 +58,44 @@ function Enter-ElementId {
     }
 }
 
+function Wait-EnterElementId {
+    param (
+        [Parameter(Mandatory = $true)]
+        [int]$timeOut,
+        [Parameter(Mandatory = $true)]
+        [string]$elementId
+    )
+
+    $wait = New-Object OpenQA.Selenium.Support.UI.WebDriverWait($driver, [TimeSpan]::FromSeconds($timeOut))
+    $condition = {
+        param($driver)
+        $element = $driver.FindElement([OpenQA.Selenium.By]::ID($elementId))
+        if ($element.Displayed) {
+            Start-Sleep -Seconds 3
+            return $true
+        }
+        else {
+            return $false
+        }
+    }
+
+    # Wait for the element to be displayed
+    $wait.Until([System.Func[Object, Boolean]]$condition) | Out-Null
+
+    # Perform some action on the element
+    try {
+        $element = $driver.FindElement([OpenQA.Selenium.By]::ID($elementId))
+        $element.Click()
+        Write-Host "Clicking to $elementId element Id"
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+}
+
 function Enter-ElementIdByJavaScript {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [System.Object]$elementId
     )
 
@@ -76,7 +111,7 @@ function Enter-ElementIdByJavaScript {
 
 function Enter-ElementXpath {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [System.Object]$elementXpath
     )
     
@@ -92,7 +127,7 @@ function Enter-ElementXpath {
 
 function Enter-ElementXpathByJavaScript {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [System.Object]$elementXpath
     )
 
@@ -108,7 +143,7 @@ function Enter-ElementXpathByJavaScript {
 
 function Switch-ToIframe {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$iframeIdOrName
     )
 
