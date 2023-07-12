@@ -64,7 +64,7 @@ function Enter-ElementXpathByJavaScript {
     )
 
     try {
-        $script = "document.getElementByXpath('$elementXpath').click();"
+        $script = "document.evaluate(`"$elementXpath`", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();"
         $driver.ExecuteScript($script)
     }
     catch [OpenQA.Selenium.WebDriverException] {
