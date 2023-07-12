@@ -52,12 +52,15 @@ function Enter-ElementXpathByJavaScript {
 }
 
 function Stop-WebDriver {
-    param(
-        [Parameter(Mandatory=$true)]
-        [System.Object]$driver
-    )
-
-    $driver.Quit()
-    Write-Host "Closing WebDriver"
-    $driver.Dispose()
+    try {
+        $driver.Close()
+        Write-Host "Closing WebDriver"
+    }
+    catch [OpenQA.Selenium.NoSuchElementException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+    finally {
+        $driver.Quit()
+        $driver.Dispose()
+    }
 }
