@@ -1,6 +1,6 @@
 using namespace System.Collections.Generic
 
-function Set-WebBrowser {
+<# function Set-WebBrowser {
     param (
         [Parameter(Mandatory = $true)]
         [string]$webBrowser
@@ -25,7 +25,8 @@ function Set-WebBrowser {
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
     }
-}
+} #>
+
 function Set-ImplicitWait {
     param(
         [Parameter(Mandatory = $true)]
