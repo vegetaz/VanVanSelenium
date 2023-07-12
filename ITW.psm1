@@ -12,7 +12,7 @@ function Expand-FolderCategory {
     try {
         Enter-ElementXpathByJavaScript('//*[@class="jstree-icon ui-icon ui-icon-plus"]')
         Write-Host "Clicking to expand folders category"
-        
+
         Start-Sleep -Seconds 3
 
         if ($driver.FindElement([OpenQA.Selenium.By]::XPath($ExamFolderNameXPath))) {
@@ -27,6 +27,15 @@ function Expand-FolderCategory {
 }
 
 function Enter-ITW {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$itw,
+        [Parameter(Mandatory=$true)]
+        [string]$username,
+        [Parameter(Mandatory=$true)]
+        [SecureString]$password
+    )
+
     Get-URL($itw)
     Set-ElementValueById -elementId 'uname' -value $username
     Set-ElementValueById -elementId 'pass' -value $password
