@@ -16,7 +16,7 @@ function Enter-ITW {
     Start-Sleep -Seconds 1
     Set-ElementValueById -elementId 'pass' -value $plainTextPassword
     Enter-ElementIdByJavaScript -elementId 'btnlogin'
-    Start-Sleep -Seconds 3
+    Start-Sleep -Seconds 5
     Enter-ElementXpathByJavaScript('//*[@id="header_headerlinksContent"]/button')
     Start-Sleep -Seconds 3
 }
