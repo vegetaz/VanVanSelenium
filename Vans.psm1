@@ -31,10 +31,15 @@ function Set-ElementValueById {
         [string]$value
     )
 
-    $element = $driver.FindElementById($elementId)
-    $element.Clear()
-    $element.SendKeys($value)
-    Write-Host "Putting the $value to $elementId element id."
+    try {
+        $element = $driver.FindElement([OpenQA.Selenium.By]::Id($elementId))
+        $element.Clear()
+        $element.SendKeys($value)
+        Write-Host "Putting the $value to $elementId element id."
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
 }
 
 function Enter-ElementIdByJavaScript {
