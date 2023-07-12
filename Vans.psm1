@@ -48,8 +48,13 @@ function Enter-ElementIdByJavaScript {
         [System.Object]$elementId
     )
 
-    $script = "arguments[0].click();"
-    $driver.ExecuteScript($script, @($elementId))
+    try {
+        $script = "document.getElementById('$elementId').click();"
+        $driver.ExecuteScript($script)
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
 }
 
 function Enter-ElementXpathByJavaScript {
