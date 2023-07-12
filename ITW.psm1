@@ -37,14 +37,36 @@ function Expand-FolderCategory {
     $examFolderNamePrefix = "//a[contains(text(),"
     $examFolderNameSuffix = ")]"
     $examFolderNameXPath = $examFolderNamePrefix + '"' + $examFolderName + '"' + $examFolderNameSuffix
+    
     try {
-        Enter-ElementXpathByJavaScript('//*[@class="jstree-icon ui-icon ui-icon-plus"]')
-        Write-Host "Clicking to expand folders category"
+        if ($driver.FindElement([OpenQA.Selenium.By]::XPath('//*[@id="foldercategory_1"]/ins'))) {
+            Enter-ElementId('foldercategory_1')
+            Enter-ElementXpath('//*[@class="jstree-icon ui-icon ui-icon-plus"]')
+            Write-Host "The Testing folder category expanded!"
+        }
+
+        if ($driver.FindElement([OpenQA.Selenium.By]::XPath('//*[@id="foldercategory_4"]/ins'))) {
+            Enter-ElementId('foldercategory_4')
+            Enter-ElementXpath('//*[@class="jstree-icon ui-icon ui-icon-plus"]')
+            Write-Host "The MBS folder category expanded!"
+        }
+
+        if ($driver.FindElement([OpenQA.Selenium.By]::XPath('//*[@id="foldercategory_5"]/ins'))) {
+            Enter-ElementId('foldercategory_5')
+            Enter-ElementXpath('//*[@class="jstree-icon ui-icon ui-icon-plus"]')
+            Write-Host "The MTA folder category expanded!"
+        }
+
+        if ($driver.FindElement([OpenQA.Selenium.By]::XPath('//*[@id="foldercategory_21"]/ins'))) {
+            Enter-ElementId('foldercategory_21')
+            # Enter-ElementXpath('//*[@class="jstree-icon ui-icon ui-icon-plus"]')
+            Write-Host "The MCP_RoleBased folder category expanded!"
+        }
 
         Start-Sleep -Seconds 3
 
         if ($driver.FindElement([OpenQA.Selenium.By]::XPath($ExamFolderNameXPath))) {
-            Enter-ElementXPath($ExamFolderNameXPath)
+            Enter-ElementXpath($ExamFolderNameXPath)
             Write-Host "Entering $ExamFolderName exam folder"
         }
     }
