@@ -12,7 +12,7 @@ function Enter-ITW {
 
     Get-URL($itw)
     Set-ElementValueById -elementId 'uname' -value $username
-    $plainTextPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword))
+    $plainTextPassword = ConvertFrom-SecureString $securePassword
     Start-Sleep -Seconds 1
     Set-ElementValueById -elementId 'pass' -value $plainTextPassword
     Enter-ElementIdByJavaScript -elementId 'btnlogin'
