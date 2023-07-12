@@ -60,14 +60,16 @@ function Enter-ElementIdByJavaScript {
 function Enter-ElementXpathByJavaScript {
     param(
         [Parameter(Mandatory=$true)]
-        [System.Object]$driver,
-
-        [Parameter(Mandatory=$true)]
         [System.Object]$elementXpath
     )
 
-    $script = "arguments[0].click();"
-    $driver.ExecuteScript($script, @($elementXpath))
+    try {
+        $script = "document.getElementByXpath('$elementXpath').click();"
+        $driver.ExecuteScript($script)
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
 }
 
 function Switch-ToIframe {
