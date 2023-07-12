@@ -20,7 +20,7 @@ function Enter-ITW {
         Start-Sleep -Seconds 1
         Enter-ElementIdByJavaScript -elementId 'btnlogin'
         Start-Sleep -Seconds 5
-        Enter-ElementXpathByJavaScript('//*[@id="header_headerlinksContent"]/button')
+        Enter-ElementId('header_headerlinksContent')
         Start-Sleep -Seconds 3
     }
     catch [OpenQA.Selenium.WebDriverException] {
