@@ -35,7 +35,7 @@ function Set-ElementValueById {
         $element = $driver.FindElement([OpenQA.Selenium.By]::Id($elementId))
         $element.Clear()
         $element.SendKeys($value)
-        Write-Host "Putting the value to $elementId element id."
+        Write-Host "Putting the value to $elementId element id"
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
@@ -50,6 +50,7 @@ function Enter-ElementIdByJavaScript {
 
     try {
         $script = "document.getElementById('$elementId').click();"
+        Write-Host "Clicking to $elementId element id"
         $driver.ExecuteScript($script)
     }
     catch [OpenQA.Selenium.WebDriverException] {
@@ -65,6 +66,7 @@ function Enter-ElementXpathByJavaScript {
 
     try {
         $script = "document.evaluate('$elementXpath', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();"
+        Write-Host "Clicking to $elementXpath element xpath"
         $driver.ExecuteScript($script)
     }
     catch [OpenQA.Selenium.WebDriverException] {
