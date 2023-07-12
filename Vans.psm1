@@ -1,5 +1,31 @@
 using namespace System.Collections.Generic
 
+function Set-WebBrowser {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$webBrowser
+    )
+
+    try {
+        switch ($webBrowser) {
+            'Chrome' { 
+                $options = New-Object OpenQA.Selenium.Chrome.ChromeOptions
+                $driver = New-Object OpenQA.Selenium.Chrome.ChromeDriver($options)
+            }
+            'Firefox' {
+                $options = New-Object OpenQA.Selenium.Firefox.FirefoxOptions
+                $driver = New-Object OpenQA.Selenium.Firefox.FirefoxDriver($options)
+            }
+            Default {
+                $options = New-Object OpenQA.Selenium.Chrome.ChromeOptions
+                $driver = New-Object OpenQA.Selenium.Chrome.ChromeDriver($options)
+            }
+        } 
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+}
 function Set-ImplicitWait {
     param(
         [Parameter(Mandatory = $true)]
@@ -13,6 +39,7 @@ function Get-URL {
     param (
         $url
     )
+
     try {
         $driver.Navigate().GoToUrl($url)
         Write-Host "Opening the $url website" -Verbose
