@@ -34,8 +34,24 @@ function Set-ElementValueById {
     try {
         $element = $driver.FindElement([OpenQA.Selenium.By]::Id($elementId))
         $element.Clear()
-        $element.SendKeys($value)
         Write-Host "Putting the value to $elementId element id"
+        $element.SendKeys($value)        
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+}
+
+function Enter-ElementId {
+    param (
+        [Parameter(Mandatory=$true)]
+        [System.Object]$elementId
+    )
+    
+    try {
+        $element = $driver.FindElement([OpenQA.Selenium.By]::ID($elementId))
+        $element.Click()
+        Write-Host "Clicking to $elementId element Id"
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
@@ -52,6 +68,22 @@ function Enter-ElementIdByJavaScript {
         $script = "document.getElementById('$elementId').click();"
         Write-Host "Clicking to $elementId element id"
         $driver.ExecuteScript($script)
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+}
+
+function Enter-ElementXpath {
+    param (
+        [Parameter(Mandatory=$true)]
+        [System.Object]$elementXpath
+    )
+    
+    try {
+        $element = $driver.FindElement([OpenQA.Selenium.By]::XPath($elementXpath))
+        $element.Click()
+        Write-Host "Clicking to $elementXpath element Xpath"
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
@@ -82,6 +114,7 @@ function Switch-ToIframe {
 
     try {
         $driver.SwitchTo().Frame($IframeIdOrName) | Out-Null
+        Write-Host "Switching to $iframeIdOrName iframe"
     }
     catch [OpenQA.Selenium.NoSuchElementException] {
         Write-Error -Message "$_.Exception.Message"
