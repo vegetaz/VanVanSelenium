@@ -3,9 +3,6 @@ using namespace System.Collections.Generic
 function Set-ImplicitWait {
     param(
         [Parameter(Mandatory=$true)]
-        [System.Management.Automation.Internal.PSObject]$driver,
-
-        [Parameter(Mandatory=$true)]
         [int]$timeoutSeconds
     )
 
