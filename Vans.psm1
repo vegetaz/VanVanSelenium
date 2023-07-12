@@ -35,7 +35,7 @@ function Set-ElementValueById {
         $element = $driver.FindElement([OpenQA.Selenium.By]::Id($elementId))
         $element.Clear()
         $element.SendKeys($value)
-        Write-Host "Putting the $value to $elementId element id."
+        Write-Host "Putting the value to $elementId element id."
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
