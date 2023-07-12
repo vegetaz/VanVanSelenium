@@ -22,6 +22,21 @@ function Get-URL {
     }
 }
 
+function Set-ElementValueById {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$elementId,
+
+        [Parameter(Mandatory=$true)]
+        [string]$value
+    )
+
+    $element = $driver.FindElementById($elementId)
+    $element.Clear()
+    $element.SendKeys($value)
+    Write-Host "Putting the $value to $elementId element id."
+}
+
 function Enter-ElementIdByJavaScript {
     param(
         [Parameter(Mandatory=$true)]
