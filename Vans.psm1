@@ -184,6 +184,32 @@ function Switch-ToIframe {
     }
 }
 
+function Get-ScreenshotWithHighlight {
+    param (
+        [Parameter(Mandatory = $true)]
+        [System.Object]$driver,
+        [Parameter(Mandatory = $true)]
+        [string]$elementXpath,
+        [Parameter(Mandatory = $true)]
+        [string]$locationPathSaveImage
+    )
+    
+    $element = $driver.FindElement([OpenQA.Selenium.By]::XPath($elementXpath))
+    # Store the original style of the element
+    $originalStyle = $element.GetAttribute("style")
+    # Add a red dashed border to the element
+    $driver.ExecuteScript("arguments[0].setAttribute('style', arguments[1]);", $element, "border: 2px solid red; border-style: dashed;")
+    try {
+        $screenshot = $driver.GetScreenshot()
+        $screenshot.SaveAsFile($locationPathSaveImage, [OpenQA.Selenium.ScreenshotImageFormat]::Png)
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+    # Restore the original style of the element
+    $driver.ExecuteScript("arguments[0].setAttribute('style', arguments[1]);", $element, $originalStyle)
+}
+
 function Stop-WebDriver {
     try {
         $driver.Close()
