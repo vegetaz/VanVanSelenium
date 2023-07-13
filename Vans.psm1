@@ -200,8 +200,12 @@ function Get-ScreenshotWithHighlight {
     # Add a red dashed border to the element
     $driver.ExecuteScript("arguments[0].setAttribute('style', arguments[1]);", $element, "border: 2px solid red; border-style: dashed;")
     try {
+        Set-Location $locationPathSaveImage
+        $fileName = Join-Path (Get-Location).Path "_ScreenshotWithHighlight_.png"
         $screenshot = $driver.GetScreenshot()
-        $screenshot.SaveAsFile($locationPathSaveImage, [OpenQA.Selenium.ScreenshotImageFormat]::Png)
+        $screenshot.SaveAsFile($fileName, [OpenQA.Selenium.ScreenshotImageFormat]::Png)
+        Write-Host -ForegroundColor DarkGreen "Successfully taken screenshot with highlight"
+        Start-Sleep -Milliseconds 1000
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
