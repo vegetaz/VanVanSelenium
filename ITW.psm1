@@ -111,7 +111,7 @@ function Enter-ExamGetScreenshot {
     $examTargetXPath = $examTargetPrefix + '"' + $examTarget + '"' + $examTargetSuffix
 
     try {
-        Enter-ElementXpathByJavaScript($examTargetXPath)
+        Enter-ElementXpath($examTargetXPath)
         Start-Sleep -Milliseconds 1000
         $driver.Navigate().Refresh()
         Write-Host "Refreshing Web browser to bypass: Browsing context has been discarded"
