@@ -38,7 +38,8 @@ function Set-ImplicitWait {
 
 function Get-URL {
     param (
-        $url
+        [Parameter(Mandatory = $true)]
+        [string]$url
     )
 
     try {
@@ -64,6 +65,25 @@ function Set-ElementValueById {
         $element.Clear()
         Write-Host "Putting the value to $elementId element id"
         $element.SendKeys($value)        
+    }
+    catch [OpenQA.Selenium.WebDriverException] {
+        Write-Error -Message "$_.Exception.Message"
+    }
+}
+
+function Send-KeysToElement {
+    param (
+        [Parameter(Mandatory = $true)]
+        [System.Object]$elementXpath,
+
+        [Parameter(Mandatory = $true)]
+        [string]$value
+    )
+    
+    try {
+        $driver.FindElement([OpenQA.Selenium.By]::XPath($elementXpath)).Clear()
+        Start-Sleep -Seconds 1
+        $driver.FindElement([OpenQA.Selenium.By]::XPath($elementXpath)).SendKeys($value)
     }
     catch [OpenQA.Selenium.WebDriverException] {
         Write-Error -Message "$_.Exception.Message"
