@@ -209,6 +209,16 @@ function Switch-ToIframe {
     }
 }
 
+function Switch-ToDefaultContent {
+    try {
+        $driver.SwitchTo().DefaultContent() | Out-Null
+        Write-Host "Switching to default content"
+    }
+    catch [OpenQA.Selenium.NoSuchElementException] {
+        Write-Error -Message "$_.Exception.Message"
+    }    
+}
+
 function Get-ScreenshotWithHighlight {
     param (
         [Parameter(Mandatory = $true)]
