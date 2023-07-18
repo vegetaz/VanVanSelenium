@@ -1,5 +1,10 @@
 using namespace System.Collections.Generic
 
+<#
+Approved Verbs for PowerShell Commands
+https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-5.1
+#>
+
 <# function Set-WebBrowser {
     param (
         [Parameter(Mandatory = $true)]
